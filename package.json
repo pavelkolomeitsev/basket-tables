@@ -1,0 +1,15 @@
+{
+  "name": "basket_tables",
+  "version": "1.0.0",
+  "description": "My pet node.js project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Pavel Kolomeitsev",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
