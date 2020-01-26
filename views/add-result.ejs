@@ -1,0 +1,58 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css" />
+<body>
+  <%- include('includes/navigation.ejs') %>
+
+  <main>
+    <form action="/add-product" method="POST">
+      <table align="center" cellspacing="20">
+        <tr>
+          <td>
+            <div class="form-control">
+              <label for="date">Date</label>
+              <input type="text" name="date" id="date" value="" />
+            </div>
+            <div class="form-control">
+              <label for="teams">Teams</label>
+              <input type="text" name="teams" id="teams" value="" />
+            </div>
+            <div class="form-control">
+              <label for="score">Score</label>
+              <input type="text" name="score" id="score" value="" />
+            </div>
+          </td>
+          <td>
+            <div class="form-checkbox">
+              <label for="Milwaukee">Milwaukee</label>
+              <input type="checkbox" name="MILWAUKEE" id="Milwaukee" />
+              <label for="Clippers">Clippers</label>
+              <input type="checkbox" name="CLIPPERS" id="Clippers" />
+            </div>
+            <div class="form-checkbox">
+              <label for="Home">Home</label>
+              <input type="checkbox" name="HOME" id="Home" />
+              <label for="Guest">Guest</label>
+              <input type="checkbox" name="GUEST" id="Guest" />
+            </div>
+            <div class="form-checkbox">
+              <label for="W1W1">W1W1</label>
+              <input type="checkbox" name="W1W1" id="W1W1" />
+              <label for="W2W2">W2W2</label>
+              <input type="checkbox" name="W2W2" id="W2W2" />
+              <label for="W1W2">W1W2</label>
+              <input type="checkbox" name="W1W2" id="W1W2" />
+              <label for="W2W1">W2W1</label>
+              <input type="checkbox" name="W2W1" id="W2W1" />
+            </div>
+          </td>
+        </tr>
+        <tr align="center">
+          <td colspan="2">
+            <button class="btn" type="submit">Add Result</button>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </form>
+  </main>
+</body>

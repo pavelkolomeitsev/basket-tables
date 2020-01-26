@@ -1,0 +1,45 @@
+<%- include('includes/head.ejs') %>
+
+<body>
+  <%- include('includes/navigation.ejs') %>
+
+  <main>
+    <form action="/tables" method="POST">
+      <table height="50" cellspacing="10">
+        <tr>
+          <td width="400" align="center">
+            <div>
+              <label for="Milwaukee">Milwaukee</label>
+              <input type="checkbox" name="MILWAUKEE" id="Milwaukee" />
+              <label for="Clippers">Clippers</label>
+              <input type="checkbox" name="CLIPPERS" id="Clippers" />
+            </div>
+          </td>
+          <td width="400" align="center">
+            <div>
+              <label for="Home">Home</label>
+              <input type="checkbox" name="HOME" id="Home" />
+              <label for="Guest">Guest</label>
+              <input type="checkbox" name="GUEST" id="Guest" />
+            </div>
+          </td>
+          <td width="400" align="center">
+            <div>
+              <label for="W1W1">W1W1</label>
+              <input type="checkbox" name="W1W1" id="W1W1" />
+              <label for="W2W2">W2W2</label>
+              <input type="checkbox" name="W2W2" id="W2W2" />
+              <label for="W1W2">W1W2</label>
+              <input type="checkbox" name="W1W2" id="W1W2" />
+              <label for="W2W1">W2W1</label>
+              <input type="checkbox" name="W2W1" id="W2W1" />
+            </div>
+          </td>
+          <td width="400" align="right">
+            <button class="btn" type="submit">Show</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </main>
+</body>
