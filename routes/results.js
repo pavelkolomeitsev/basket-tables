@@ -13,6 +13,8 @@ route.get('/add-result', resultController.getAddResult);
 
 route.post('/add-result', resultController.postAddResult);
 
+route.post('/delete-result', resultController.postDeleteResult);
+
 route.get('/tables', tableController.getTables);
 
 route.post('/tables', tableController.postTables);

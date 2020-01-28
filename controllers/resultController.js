@@ -36,8 +36,16 @@ exports.postAddResult = (req, res, next) => {
     // create an instance of Result
     const result = new Result(date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf);
 
+    console.log(result);
+
     // add result
     Result.addResult(result);
 
+    res.redirect('/results');
+}
+
+exports.postDeleteResult = (req, res, next) => {
+    const resultId = req.body.productId;
+    Result.deleteById(resultId);
     res.redirect('/results');
 }

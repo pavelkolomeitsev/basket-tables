@@ -46,4 +46,15 @@ module.exports = class Result {
             });
         });
     }
+
+    static deleteById(id) {
+        getResultsFromFile(products => {
+            // method 'filter' returns all items to the new list which don`t match an id we pass
+            const updatedList = products.filter(item => item.id !== id);
+            // write newly created list to the file
+            fs.writeFile(path, JSON.stringify(updatedList), error => {
+                console.log(error);
+            });
+        });
+    }
 }
