@@ -11,6 +11,9 @@ route.get('/results', resultController.getAllResults);
 
 route.get('/add-result', resultController.getAddResult);
 
+// has to be implemented
+//route.get('/edit-result/:resultId', resultController.getEditResult);
+
 route.post('/add-result', resultController.postAddResult);
 
 route.post('/delete-result', resultController.postDeleteResult);

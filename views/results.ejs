@@ -12,10 +12,7 @@
                 <td width="25%" align="center"><%= result.teams %> </td>
                 <td width="50%" align="center"><font size="6"><%= result.score %> </font></td>
                 <td>
-                  <form action="/edit-result" method="POST">
-                    <button class="btn" type="submit">Edit</button>
-                    <input type="hidden" name="productId" value="<%= result.id %>" />
-                  </form>
+                  <a href="/edit-result/<%= result.id %>?edit=true" class="btn">Edit</a>
                 </td>
                 <td>
                   <form action="/delete-result" method="POST">
