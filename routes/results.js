@@ -11,8 +11,7 @@ route.get('/results', resultController.getAllResults);
 
 route.get('/add-result', tableController.getAddResultToTable);
 
-// has to be editing...
-route.post('/add-result');
+route.post('/add-result', resultController.postAddResult);
 
 route.get('/tables', tableController.getTables);
 
