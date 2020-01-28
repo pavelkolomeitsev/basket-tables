@@ -4,6 +4,9 @@ const fs = require('fs');
 const pathConstructor = require('path');
 const path = pathConstructor.join(pathConstructor.dirname(process.mainModule.filename), 'data', 'results.json');
 
+// connect enums
+const enums = require('../utils/enums');
+
 // fetching data from json-file
 const getResultsFromFile = callback => {
     fs.readFile(path, (error, fileContent) => {
@@ -17,12 +20,13 @@ const getResultsFromFile = callback => {
 }
 
 module.exports = class Result {
-    constructor(date, teams, score, favTeam, homeGuest, firstHalf) {
+    constructor(date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf) {
         this.id = new Date().getTime().toString();
         this.date = date;
         this.teams = teams;
         this.score = score;
-        this.favTeam = favTeam;
+        this.isMilwaukee = isMilwaukee === enums.FavoriteTeam.MILWAUKEE ? enums.FavoriteTeam.MILWAUKEE : '';
+        this.isClippers = isClippers === enums.FavoriteTeam.CLIPPERS ? enums.FavoriteTeam.CLIPPERS : '';
         this.homeGuest = homeGuest;
         this.firstHalf = firstHalf;
     }
@@ -31,5 +35,15 @@ module.exports = class Result {
         getResultsFromFile(callback);
     }
 
-
+    // pass an instance of Result, call 'getResultsFromFile'
+    // pass-implement into 'getResultsFromFile'-method anonymous function with results as a list of objects
+    static addResult(result) {
+        getResultsFromFile(results => {
+            results.push(result); // add new result to the list
+            // write it into the file
+            fs.writeFile(path, JSON.stringify(results), error => {
+                console.log(error);
+            });
+        });
+    }
 }

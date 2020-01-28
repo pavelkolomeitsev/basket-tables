@@ -15,6 +15,6 @@ const FirstHalf = {
     W2W1: "W2W1",
 }
 
-module.exports = FavoriteTeam;
-module.exports = HomeGuest;
-module.exports = FirstHalf;
+module.exports.FavoriteTeam = FavoriteTeam;
+module.exports.HomeGuest = HomeGuest;
+module.exports.FirstHalf = FirstHalf;

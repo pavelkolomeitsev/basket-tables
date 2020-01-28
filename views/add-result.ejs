@@ -4,45 +4,55 @@
   <%- include('includes/navigation.ejs') %>
 
   <main>
-    <form action="/add-product" method="POST">
+    <form action="/add-result" method="POST">
       <table align="center" cellspacing="20">
         <tr>
           <td>
             <div class="form-control">
               <label for="date">Date</label>
-              <input type="text" name="date" id="date" value="" />
+              <input type="text" name="date" id="date" />
             </div>
             <div class="form-control">
               <label for="teams">Teams</label>
-              <input type="text" name="teams" id="teams" value="" />
+              <input type="text" name="teams" id="teams" />
             </div>
             <div class="form-control">
               <label for="score">Score</label>
-              <input type="text" name="score" id="score" value="" />
+              <input type="text" name="score" id="score" />
             </div>
           </td>
           <td>
             <div class="form-checkbox">
               <label for="Milwaukee">Milwaukee</label>
-              <input type="checkbox" name="MILWAUKEE" id="Milwaukee" />
+              <input
+                type="checkbox"
+                name="MILWAUKEE"
+                id="Milwaukee"
+                value="MILWAUKEE"
+              />
               <label for="Clippers">Clippers</label>
-              <input type="checkbox" name="CLIPPERS" id="Clippers" />
+              <input
+                type="checkbox"
+                name="CLIPPERS"
+                id="Clippers"
+                value="CLIPPERS"
+              />
             </div>
             <div class="form-checkbox">
               <label for="Home">Home</label>
-              <input type="checkbox" name="HOME" id="Home" />
+              <input type="checkbox" name="HOME" id="Home" value="HOME" />
               <label for="Guest">Guest</label>
-              <input type="checkbox" name="GUEST" id="Guest" />
+              <input type="checkbox" name="GUEST" id="Guest" value="GUEST" />
             </div>
             <div class="form-checkbox">
               <label for="W1W1">W1W1</label>
-              <input type="checkbox" name="W1W1" id="W1W1" />
+              <input type="checkbox" name="W1W1" id="W1W1" value="W1W1" />
               <label for="W2W2">W2W2</label>
-              <input type="checkbox" name="W2W2" id="W2W2" />
+              <input type="checkbox" name="W2W2" id="W2W2" value="W2W2" />
               <label for="W1W2">W1W2</label>
-              <input type="checkbox" name="W1W2" id="W1W2" />
+              <input type="checkbox" name="W1W2" id="W1W2" value="W1W2" />
               <label for="W2W1">W2W1</label>
-              <input type="checkbox" name="W2W1" id="W2W1" />
+              <input type="checkbox" name="W2W1" id="W2W1" value="W2W1" />
             </div>
           </td>
         </tr>

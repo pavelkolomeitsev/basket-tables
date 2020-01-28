@@ -9,7 +9,7 @@ route.get('/', resultController.getAllResults);
 
 route.get('/results', resultController.getAllResults);
 
-route.get('/add-result', tableController.getAddResultToTable);
+route.get('/add-result', resultController.getAddResult);
 
 route.post('/add-result', resultController.postAddResult);
 
