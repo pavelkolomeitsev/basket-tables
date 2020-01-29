@@ -12,7 +12,10 @@ route.get('/results', resultController.getAllResults);
 route.get('/add-result', resultController.getAddResult);
 
 // has to be implemented
-//route.get('/edit-result/:resultId', resultController.getEditResult);
+route.get('/edit-result/:resultId', resultController.getEditResult);
+
+// has to be implemented
+//route.post('/edit-result', resultController.postEditResult);
 
 route.post('/add-result', resultController.postAddResult);
 

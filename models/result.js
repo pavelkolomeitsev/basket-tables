@@ -47,6 +47,13 @@ module.exports = class Result {
         });
     }
 
+    static findById(id, callback) {
+        getResultsFromFile(products => {
+            const result = products.find(item => item.id === id);
+            callback(result);
+        });
+    }
+
     static deleteById(id) {
         getResultsFromFile(products => {
             // method 'filter' returns all items to the new list which don`t match an id we pass

@@ -4,21 +4,39 @@
   <%- include('includes/navigation.ejs') %>
 
   <main>
-    <form action="/add-result" method="POST">
+    <form
+      action="/<%if (editing) {%>edit-result<% } else { %>add-result<% } %>"
+      method="POST"
+    >
       <table align="center" cellspacing="20">
         <tr>
           <td>
             <div class="form-control">
               <label for="date">Date</label>
-              <input type="text" name="date" id="date" />
+              <input
+                type="text"
+                name="date"
+                id="date"
+                value="<%if (editing) {%><%=result.date%><% } %>"
+              />
             </div>
             <div class="form-control">
               <label for="teams">Teams</label>
-              <input type="text" name="teams" id="teams" />
+              <input
+                type="text"
+                name="teams"
+                id="teams"
+                value="<%if (editing) {%><%=result.teams%><% } %>"
+              />
             </div>
             <div class="form-control">
               <label for="score">Score</label>
-              <input type="text" name="score" id="score" />
+              <input
+                type="text"
+                name="score"
+                id="score"
+                value="<%if (editing) {%><%=result.score%><% } %>"
+              />
             </div>
           </td>
           <td>
@@ -58,7 +76,9 @@
         </tr>
         <tr align="center">
           <td colspan="2">
-            <button class="btn" type="submit">Add Result</button>
+            <button class="btn" type="submit">
+              <%if (editing) {%>Edit Result<% } else { %>Add Result<% } %>
+            </button>
           </td>
           <td></td>
         </tr>

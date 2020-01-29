@@ -44,6 +44,31 @@ exports.postAddResult = (req, res, next) => {
     res.redirect('/results');
 }
 
+exports.getEditResult = (req, res, next) => {
+
+    // check if query is true (?edit=true)
+    const editMode = req.query.edit;
+    if (!editMode) {
+        return res.redirect('/results'); // otherwise return to results-page
+    }
+
+    // get id of result as a param in url (/edit-result/1580239017793)
+    const resId = req.params.resultId;
+    Result.findById(resId, result => {
+
+        if (!result) {
+            res.redirect('/results');
+        }
+
+        // direct the user to the page add-result/edit-result with all necessary data
+        res.render('add-result', { pageTitle: 'Edit Result', path: '/edit-result', editing: editMode, result: result });
+    });
+}
+
+exports.postEditResult = (req, res, next) => {
+
+}
+
 exports.postDeleteResult = (req, res, next) => {
     const resultId = req.body.productId;
     Result.deleteById(resultId);
