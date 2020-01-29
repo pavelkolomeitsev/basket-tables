@@ -11,13 +11,11 @@ route.get('/results', resultController.getAllResults);
 
 route.get('/add-result', resultController.getAddResult);
 
-// has to be implemented
+route.post('/add-result', resultController.postAddResult);
+
 route.get('/edit-result/:resultId', resultController.getEditResult);
 
-// has to be implemented
-//route.post('/edit-result', resultController.postEditResult);
-
-route.post('/add-result', resultController.postAddResult);
+route.post('/edit-result', resultController.postEditResult);
 
 route.post('/delete-result', resultController.postDeleteResult);
 

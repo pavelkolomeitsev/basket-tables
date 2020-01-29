@@ -20,8 +20,8 @@ const getResultsFromFile = callback => {
 }
 
 module.exports = class Result {
-    constructor(date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf) {
-        this.id = new Date().getTime().toString();
+    constructor(id, date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf) {
+        this.id = id;
         this.date = date;
         this.teams = teams;
         this.score = score;
@@ -35,29 +35,44 @@ module.exports = class Result {
         getResultsFromFile(callback);
     }
 
-    // pass an instance of Result, call 'getResultsFromFile'
-    // pass-implement into 'getResultsFromFile'-method anonymous function with results as a list of objects
-    static addResult(result) {
+    // instead of static addResult
+    save() {
         getResultsFromFile(results => {
-            results.push(result); // add new result to the list
-            // write it into the file
-            fs.writeFile(path, JSON.stringify(results), error => {
-                console.log(error);
-            });
+            if (this.id) {
+                // find index of edited result
+                const index = results.findIndex(item => item.id === this.id);
+                // copy existing list of results
+                const updatedResults = [...results];
+                // replace updated item in the newly created list
+                updatedResults[index] = this; // this - it`s an instance of Result
+                // write this data to the file
+                fs.writeFile(path, JSON.stringify(updatedResults), error => {
+                    console.log(error);
+                });
+            } else {
+                // in the save-method we create a new property of class Product (Yes! You can do it in JavaScript!!!)
+                this.id = new Date().getTime().toString();
+                // and add it to the list of results
+                results.push(this);
+                // write it into the file
+                fs.writeFile(path, JSON.stringify(results), error => {
+                    console.log(error);
+                });
+            }
         });
     }
 
     static findById(id, callback) {
-        getResultsFromFile(products => {
-            const result = products.find(item => item.id === id);
+        getResultsFromFile(results => {
+            const result = results.find(item => item.id === id);
             callback(result);
         });
     }
 
     static deleteById(id) {
-        getResultsFromFile(products => {
+        getResultsFromFile(results => {
             // method 'filter' returns all items to the new list which don`t match an id we pass
-            const updatedList = products.filter(item => item.id !== id);
+            const updatedList = results.filter(item => item.id !== id);
             // write newly created list to the file
             fs.writeFile(path, JSON.stringify(updatedList), error => {
                 console.log(error);
