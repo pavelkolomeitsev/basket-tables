@@ -61,6 +61,10 @@ form {
   color: #fae902;
 }
 
+.table-card {
+  margin-bottom: 20px;
+}
+
 .mobile-nav {
   width: 30rem;
   height: 100vh;

@@ -5,34 +5,44 @@
 
   <main>
     <form action="/tables" method="POST">
-      <table height="50" cellspacing="10">
+      <table class="table-card" height="50" cellspacing="10">
         <tr>
           <td width="400" align="center">
             <div>
               <label for="Milwaukee">Milwaukee</label>
-              <input type="checkbox" name="MILWAUKEE" id="Milwaukee" />
+              <input
+                type="checkbox"
+                name="MILWAUKEE"
+                id="Milwaukee"
+                value="MILWAUKEE"
+              />
               <label for="Clippers">Clippers</label>
-              <input type="checkbox" name="CLIPPERS" id="Clippers" />
+              <input
+                type="checkbox"
+                name="CLIPPERS"
+                id="Clippers"
+                value="CLIPPERS"
+              />
             </div>
           </td>
           <td width="400" align="center">
             <div>
               <label for="Home">Home</label>
-              <input type="checkbox" name="HOME" id="Home" />
+              <input type="checkbox" name="HOME" id="Home" value="HOME" />
               <label for="Guest">Guest</label>
-              <input type="checkbox" name="GUEST" id="Guest" />
+              <input type="checkbox" name="GUEST" id="Guest" value="GUEST" />
             </div>
           </td>
           <td width="400" align="center">
             <div>
               <label for="W1W1">W1W1</label>
-              <input type="checkbox" name="W1W1" id="W1W1" />
+              <input type="checkbox" name="W1W1" id="W1W1" value="W1W1" />
               <label for="W2W2">W2W2</label>
-              <input type="checkbox" name="W2W2" id="W2W2" />
+              <input type="checkbox" name="W2W2" id="W2W2" value="W2W2" />
               <label for="W1W2">W1W2</label>
-              <input type="checkbox" name="W1W2" id="W1W2" />
+              <input type="checkbox" name="W1W2" id="W1W2" value="W1W2" />
               <label for="W2W1">W2W1</label>
-              <input type="checkbox" name="W2W1" id="W2W1" />
+              <input type="checkbox" name="W2W1" id="W2W1" value="W2W1" />
             </div>
           </td>
           <td width="400" align="right">
@@ -41,5 +51,20 @@
         </tr>
       </table>
     </form>
+    <% if (results.length > 0) {%> <% for (let result of results) { %>
+    <article>
+      <table class="card product-item" cellpadding="5">
+        <tr>
+          <td width="15%" align="center"><%= result.date %></td>
+          <td width="30%" align="center"><%= result.teams %></td>
+          <td width="55%" align="center">
+            <font size="6"><%= result.score %></font>
+          </td>
+        </tr>
+      </table>
+    </article>
+    <% } %> <% } else { %>
+    <h1 align="center">Any results!</h1>
+    <% } %>
   </main>
 </body>
