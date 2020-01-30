@@ -51,14 +51,15 @@
         </tr>
       </table>
     </form>
-    <% if (results.length > 0) {%> <% for (let result of results) { %>
+    <% if (results.length > 0 && results[0]) {%> <% for (let result of results)
+    { %>
     <article>
       <table class="card product-item" cellpadding="5">
         <tr>
-          <td width="15%" align="center"><%= result.date %></td>
-          <td width="30%" align="center"><%= result.teams %></td>
+          <td width="15%" align="center"><%=result.date %></td>
+          <td width="30%" align="center"><%=result.teams %></td>
           <td width="55%" align="center">
-            <font size="6"><%= result.score %></font>
+            <font size="6"><%=result.score %></font>
           </td>
         </tr>
       </table>

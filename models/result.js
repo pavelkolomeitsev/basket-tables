@@ -79,4 +79,47 @@ module.exports = class Result {
             });
         });
     }
+
+    static selectResults(settings, callback) {
+        getResultsFromFile(results => {
+            const selectedResults = [];
+            results.forEach(item => {
+                if (item.isMilwaukee === settings.isMilwaukee) {
+                    if (item.homeGuest === settings.home) {
+                        selectedResults.push(getSelectedItem(item, settings));
+                    } else if (item.homeGuest === settings.guest) {
+                        selectedResults.push(getSelectedItem(item, settings));
+                    }
+                } else if (item.isClippers === settings.isClippers) {
+                    if (item.homeGuest === settings.home) {
+                        selectedResults.push(getSelectedItem(item, settings));
+                    } else if (item.homeGuest === settings.guest) {
+                        selectedResults.push(getSelectedItem(item, settings));
+                    }
+                }
+            });
+
+            callback(selectedResults);
+        });
+    }
+}
+
+const getSelectedItem = (item, settings) => {
+    let rightResult = null;
+    switch (item.firstHalf) {
+        case settings.W1W1:
+            rightResult = item;
+            break;
+        case settings.W2W2:
+            rightResult = item;
+            break;
+        case settings.W1W2:
+            rightResult = item;
+            break;
+        case settings.W2W1:
+            rightResult = item;
+            break;
+    }
+
+    return rightResult;
 }
