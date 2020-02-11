@@ -6,9 +6,11 @@ const enums = require('../utils/enums');
 
 exports.getAllResults = (req, res, next) => {
     // call static function of Result-class and pass into it 'res.render'-method
-    Result.fetchAll(results => {
-        res.render('results', { results: results, pageTitle: 'Results', path: '/results' });
-    });
+    Result.fetchAll()
+        .then(([results, fieldData]) => {
+            res.render('results', { results: results, pageTitle: 'Results', path: '/results' });
+        })
+        .catch(error => console.log(error));
 }
 
 exports.getAddResult = (req, res, next) => {
