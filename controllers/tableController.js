@@ -1,3 +1,6 @@
+// for special SQL queries
+const {Op} = require('sequelize');
+
 // connect result-model
 const Result = require('../models/result');
 
@@ -10,25 +13,40 @@ exports.getTables = (req, res, next) => {
 
 exports.postTables = (req, res, next) => {
 
-    // create an object 'settings' where we hold user`s preferable results
+    // create an object 'settings' where we hold user`s preferable results and check for any mistakes
     let settings = {};
-    settings.isMilwaukee = req.body.MILWAUKEE === enums.FavoriteTeam.MILWAUKEE ? enums.FavoriteTeam.MILWAUKEE : 'no';
-    settings.isClippers = req.body.CLIPPERS === enums.FavoriteTeam.CLIPPERS ? enums.FavoriteTeam.CLIPPERS : 'no';
-    settings.home = req.body.HOME === enums.HomeGuest.HOME ? enums.HomeGuest.HOME : 'no';
-    settings.guest = req.body.GUEST === enums.HomeGuest.GUEST ? enums.HomeGuest.GUEST : 'no';
-    settings.W1W1 = req.body.W1W1 === enums.FirstHalf.W1W1 ? enums.FirstHalf.W1W1 : 'no';
-    settings.W2W2 = req.body.W2W2 === enums.FirstHalf.W2W2 ? enums.FirstHalf.W2W2 : 'no';
-    settings.W1W2 = req.body.W1W2 === enums.FirstHalf.W1W2 ? enums.FirstHalf.W1W2 : 'no';
-    settings.W2W1 = req.body.W2W1 === enums.FirstHalf.W2W1 ? enums.FirstHalf.W2W1 : 'no';
+    settings.isMilwaukee = req.body.MILWAUKEE === enums.FavoriteTeam.MILWAUKEE ? enums.FavoriteTeam.MILWAUKEE : null;
+    settings.isClippers = req.body.CLIPPERS === enums.FavoriteTeam.CLIPPERS ? enums.FavoriteTeam.CLIPPERS : null;
+    settings.homeGuest = req.body.HOME === enums.HomeGuest.HOME ? enums.HomeGuest.HOME : enums.HomeGuest.GUEST;
+    if(req.body.W1W1 === enums.FirstHalf.W1W1){
+        settings.firstHalf = req.body.W1W1;    
+    }else if(req.body.W2W2 === enums.FirstHalf.W2W2){
+        settings.firstHalf = req.body.W2W2;
+    }else if(req.body.W1W2 === enums.FirstHalf.W1W2){
+        settings.firstHalf = req.body.W1W2;    
+    }else{
+        settings.firstHalf = req.body.W2W1;    
+    }
 
-    Result.selectResults(settings, results => {
-
-        if (!results) {
-            res.redirect('/results');
-        }
-
-        res.render('tables', { pageTitle: 'Tables', path: '/tables', results: results });
-    });
-
-
+    if(!settings.isMilwaukee && !settings.isClippers || !settings.homeGuest || !settings.firstHalf){
+        return res.render('tables', { pageTitle: 'Tables', path: '/tables', results: null });
+    }
+    
+    // this query means all results WHERE (isMilwaukee = true OR isClippers = true) AND homeGuest = true AND firstHalf = true
+    Result.findAll({where: {
+        [Op.or]: [
+            {isMilwaukee: settings.isMilwaukee},
+            {isClippers: settings.isClippers}
+        ],
+        homeGuest: settings.homeGuest,
+        firstHalf: settings.firstHalf
+    }})
+        .then(results => {
+            if (!results) {
+                res.redirect('/results');
+            }
+    
+            res.render('tables', { pageTitle: 'Tables', path: '/tables', results: results });
+        })
+        .catch(error => console.log(error));
 }
