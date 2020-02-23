@@ -12,12 +12,12 @@
                 <td width="25%" align="center"><%= result.teams %> </td>
                 <td width="50%" align="center"><font size="6"><%= result.score %> </font></td>
                 <td>
-                  <a href="/edit-result/<%= result.id %>?edit=true" class="btn">Edit</a>
+                  <a href="/edit-result/<%= result._id %>?edit=true" class="btn">Edit</a>
                 </td>
                 <td>
                   <form action="/delete-result" method="POST">
                     <button class="btn" type="submit">Delete</button>
-                    <input type="hidden" name="resultId" value="<%= result.id %>" />
+                    <input type="hidden" name="resultId" value="<%= result._id %>" />
                   </form>
                 </td>
               </tr>

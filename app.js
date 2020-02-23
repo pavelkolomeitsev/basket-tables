@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const sequelize = require('./utils/database');
+const mongoConnection = require('./utils/database').mongoConnection;
 
 // create an application
 const app = express();
@@ -29,11 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(resultRoute);
 app.use(errorRoute);
 
-// sync method connects database with node app, creates tables
-sequelize.sync()
-    .then(result => {
 
-        // run server
-        app.listen(9090);
-    })
-    .catch(error => console.log(error));
+mongoConnection(() => {
+    // run server
+    app.listen(9090);
+});
