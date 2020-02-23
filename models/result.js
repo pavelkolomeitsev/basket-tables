@@ -1,23 +1,8 @@
-// connect file-system package
-const fs = require('fs');
-// constructing the path to the file
-const pathConstructor = require('path');
-const path = pathConstructor.join(pathConstructor.dirname(process.mainModule.filename), 'data', 'results.json');
-
 // connect enums
 const enums = require('../utils/enums');
+// connect a reference to database
+const database = require('../utils/database');
 
-// fetching data from json-file
-const getResultsFromFile = callback => {
-    fs.readFile(path, (error, fileContent) => {
-        // if where is nothing in the file we return an empty list
-        if (error) {
-            callback([]);
-        } else { // otherwise we pass converted from JSON into normal js-objects list
-            callback(JSON.parse(fileContent));
-        }
-    });
-}
 
 module.exports = class Result {
     constructor(id, date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf) {
@@ -25,101 +10,41 @@ module.exports = class Result {
         this.date = date;
         this.teams = teams;
         this.score = score;
-        this.isMilwaukee = isMilwaukee === enums.FavoriteTeam.MILWAUKEE ? enums.FavoriteTeam.MILWAUKEE : '';
-        this.isClippers = isClippers === enums.FavoriteTeam.CLIPPERS ? enums.FavoriteTeam.CLIPPERS : '';
+        this.isMilwaukee = isMilwaukee;
+        this.isClippers = isClippers;
         this.homeGuest = homeGuest;
         this.firstHalf = firstHalf;
     }
 
-    static fetchAll(callback) {
-        getResultsFromFile(callback);
+    static fetchAll() {
+        return database.execute('SELECT * FROM results');
     }
 
     // instead of static addResult
     save() {
-        getResultsFromFile(results => {
-            if (this.id) {
-                // find index of edited result
-                const index = results.findIndex(item => item.id === this.id);
-                // copy existing list of results
-                const updatedResults = [...results];
-                // replace updated item in the newly created list
-                updatedResults[index] = this; // this - it`s an instance of Result
-                // write this data to the file
-                fs.writeFile(path, JSON.stringify(updatedResults), error => {
-                    console.log(error);
-                });
-            } else {
-                // in the save-method we create a new property of class Product (Yes! You can do it in JavaScript!!!)
-                this.id = new Date().getTime().toString();
-                // and add it to the list of results
-                results.push(this);
-                // write it into the file
-                fs.writeFile(path, JSON.stringify(results), error => {
-                    console.log(error);
-                });
-            }
-        });
+        return database.execute(
+            'INSERT INTO results (date, teams, score, isMilwaukee, isClippers, homeGuest, firstHalf) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [this.date, this.teams, this.score, this.isMilwaukee, this.isClippers, this.homeGuest, this.firstHalf]);
     }
 
-    static findById(id, callback) {
-        getResultsFromFile(results => {
-            const result = results.find(item => item.id === id);
-            callback(result);
-        });
+    editById(id) {
+        return database.execute(
+            'UPDATE results SET date = ?, teams = ?, score = ?, isMilwaukee = ?, isClippers = ?, homeGuest = ?, firstHalf = ? WHERE id = ?',
+            [this.date, this.teams, this.score, this.isMilwaukee, this.isClippers, this.homeGuest, this.firstHalf, id]);
+    }
+
+    static findById(id){
+        return database.execute('SELECT * FROM results WHERE id = ?', [id]);
     }
 
     static deleteById(id) {
-        getResultsFromFile(results => {
-            // method 'filter' returns all items to the new list which don`t match an id we pass
-            const updatedList = results.filter(item => item.id !== id);
-            // write newly created list to the file
-            fs.writeFile(path, JSON.stringify(updatedList), error => {
-                console.log(error);
-            });
-        });
+        return database.execute('DELETE FROM results where id = ?', [id]);
     }
 
-    static selectResults(settings, callback) {
-        getResultsFromFile(results => {
-            const selectedResults = [];
-            results.forEach(item => {
-                if (item.isMilwaukee === settings.isMilwaukee) {
-                    if (item.homeGuest === settings.home) {
-                        selectedResults.push(getSelectedItem(item, settings));
-                    } else if (item.homeGuest === settings.guest) {
-                        selectedResults.push(getSelectedItem(item, settings));
-                    }
-                } else if (item.isClippers === settings.isClippers) {
-                    if (item.homeGuest === settings.home) {
-                        selectedResults.push(getSelectedItem(item, settings));
-                    } else if (item.homeGuest === settings.guest) {
-                        selectedResults.push(getSelectedItem(item, settings));
-                    }
-                }
-            });
+    static selectResults(settings) {
 
-            callback(selectedResults);
-        });
-    }
-}
-
-const getSelectedItem = (item, settings) => {
-    let rightResult = null;
-    switch (item.firstHalf) {
-        case settings.W1W1:
-            rightResult = item;
-            break;
-        case settings.W2W2:
-            rightResult = item;
-            break;
-        case settings.W1W2:
-            rightResult = item;
-            break;
-        case settings.W2W1:
-            rightResult = item;
-            break;
-    }
-
-    return rightResult;
+        return database.execute(
+            'SELECT * FROM results WHERE (isMilwaukee = ? || isClippers = ?) AND homeGuest = ? AND firstHalf = ?',
+            [settings.isMilwaukee, settings.isClippers, settings.homeGuest, settings.firstHalf]);
+        }
 }

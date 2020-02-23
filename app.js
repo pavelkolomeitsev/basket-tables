@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const database = require('./utils/database');
+
 // create an application
 const app = express();
 
