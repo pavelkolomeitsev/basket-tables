@@ -32,5 +32,5 @@ app.use(errorRoute);
 
 mongoConnection(() => {
     // run server
-    app.listen(9090);
+    app.listen(process.env.PORT || 9090);
 });
