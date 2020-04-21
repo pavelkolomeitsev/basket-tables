@@ -8,7 +8,7 @@ let db;
 
 // connect to MongoDB server
 const mongoConnection = (callback) => {
-    MongoClient.connect('mongodb+srv://pavel:yX3dbGT5P@clusternodeshop-frwbo.mongodb.net/basket_tables?retryWrites=true&w=majority')
+    MongoClient.connect('mongodb+srv://:@clusternodeshop-frwbo.mongodb.net/?retryWrites=true&w=majority')
         .then((client) => {
             console.log('Connected!');
             db = client.db();
